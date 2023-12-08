@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Spring Exercise Newsletter Signup</title>
+    <style>
+        body, p, h1, form {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>Welcome to My Spring Exercise</h1>
+    <p>Please subscribe to my non-real newsletter</p>
+    <form action="/subscribe" method="post">
+        <input type="hidden" name="formId" value="585858"/>
+        <input type="email" name="email" placeholder="Email address">
+        <button type="submit">Subscribe</button>
+    </form>
+    <img src="image.jpg" alt="A nice picture">
+</div>
+<script>
+
+    document.addEventListener('DOMContentLoaded', function() {
+        const form = document.querySelector('form');
+
+        form.addEventListener('submit', function(event) {
+            event.preventDefault();
+            const email = form.querySelector('input[type="email"]').value;
+            const formId = form.querySelector('input[name="formId"]').value;
+
+            const formData = {
+                email: email,
+                formId: formId
+            };
+
+            // Using fetch to send data
+            fetch(form.action, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(formData)
+            })
+                .then(response => {
+                    if (response.ok) {
+                        window.location.href = '/thank-you.html'; // Redirect on successful response
+                    } else {
+                        throw new Error('Form submission failed');
+                    }
+                })
+                .catch(error => console.error('Error:', error));
+        });
+    });
+
+</script>
+</body>
+</html>
